@@ -1,28 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <el-button>el-button</el-button>
+	
+	 <el-radio v-model="radio" label="1" @change="change">备选项</el-radio>
+	 <el-radio v-model="radio" label="2" @change="change">备选项</el-radio>
+	
+	
+	<el-radio-group v-model="radio" size="medium">
+	    <el-radio-button label="3" @change="change">3</el-radio-button>
+	    <el-radio-button label="6" @change="change">6</el-radio-button>
+	    <el-radio-button label="9" @change="change">9</el-radio-button>
+	 </el-radio-group>
+	
+	
+	<el-radio-group v-model="radio" size="medium">
+	    <el-radio label="3" @change="change" border>3</el-radio>
+	    <el-radio label="6" @change="change" border>6</el-radio>
+	    <el-radio label="9" @change="change" border>9</el-radio>
+	 </el-radio-group> 
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+    data () {
+      return {
+        radio: '6'
+      };
+    },
+	
+	methods:{
+		change(e){
+			console.log(e)
+		}
+	}
   }
-}
+
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
