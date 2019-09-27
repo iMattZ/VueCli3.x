@@ -9,10 +9,12 @@ let routes = [
 			{
 				// path:'/index',
 				// name:'index',
+				meta:{title:'后台首页'},
 				component:'index/index'
 			
 			},
 			{
+				meta:{title:'商品列表'},
 				component:'shop/goods/list'
 			}
 		]
@@ -20,6 +22,7 @@ let routes = [
 	{
 		// path:'/login',
 		// name:'login',
+		meta:{title:'登陆页'},
 		component:'login/index'
 	},
 	{
