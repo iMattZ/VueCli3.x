@@ -48,7 +48,7 @@
 				<el-main>
 					
 					<!-- 面包屑导航 -->
-					<div class="border-bottom" v-if="bran.length > 0"
+					<div class="border-bottom mb-3" v-if="bran.length > 0"
 					style="padding: 20px; margin: -20px;">
 						
 						<el-breadcrumb separator-class="el-icon-arrow-right">
@@ -92,14 +92,26 @@
 			'$route'(to,from) {
 				// console.log(to);
 				// console.log(from);
+				
+				// 本地存储
+				localStorage.setItem('navActive',JSON.stringify({
+					top:this.navBar.active,
+					left:this.slideMenuActive
+				}))
+				
 				this.getRouterBran()
 			}
 		},
 		
 		created() {
+			// 初始化菜单
 			this.navBar = this.$conf.navBar
 			
+			// 获取面包屑导航
 			this.getRouterBran()
+			
+			// 初始化选中菜单
+			this.__initNavBar()
 		},
 
 		computed: {
@@ -121,6 +133,14 @@
 		},
 
 		methods: {
+			
+			__initNavBar() {
+				let r = localStorage.getItem('navActive')
+				if(r) {
+					r = JSON.parse(r)
+					console.log(r)
+				}
+			},
 			
 			// 获取面包屑导航
 			getRouterBran() {
@@ -149,12 +169,16 @@
 			
 			handleSelect(key, keyPath) {
 				this.navBar.active = key
+				// 默认选中跳转到当前激活
+				this.$route.push({
+					name:this.slideMenus[this.slideMenuActive].pathname
+				})
 			},
 			slideSelect(key, keyPath) {
 				this.slideMenuActive = key
 				
 				// 跳到指定到页面
-				console.log(this.slideMenus)
+				console.log(this.slideMenus[Key].pathname)
 			}
 		}
 	}
