@@ -32,7 +32,7 @@
 				<!-- 侧边布局 -->
 				<el-aside width="200px">
 
-					<el-menu default-active="0" @select="sideSelect" style="height: 100%;">
+					<el-menu default-active="0" @select="slideSelect" style="height: 100%;">
 
 						<el-menu-item :index="index|numToString" v-for="(item,index) in slideMenus" :key="index">
 							<i :class="item.icon"></i>
@@ -48,16 +48,17 @@
 				<el-main>
 					
 					<!-- 面包屑导航 -->
-					<div class="border-bottom" style="padding: 20px; margin: -20px;">
+					<div class="border-bottom" v-if="bran.length > 0"
+					style="padding: 20px; margin: -20px;">
 						
 						<el-breadcrumb separator-class="el-icon-arrow-right">
-
 						  <el-breadcrumb-item v-for="(item,index) in bran" :key="index" :to="{path:item.path}">{{item.title}}</el-breadcrumb-item>
 						</el-breadcrumb>
 					</div>
 					
 					
-					
+					<!-- 主内容 -->
+					<router-view></router-view>
 					
 				</el-main>
 
@@ -85,6 +86,14 @@
 				navBar:[],
 				bran:[]
 			};
+		},
+		
+		watch:{
+			'$route'(to,from) {
+				// console.log(to);
+				// console.log(from);
+				this.getRouterBran()
+			}
 		},
 		
 		created() {
@@ -117,7 +126,7 @@
 			getRouterBran() {
 
 				let b = this.$route.matched.filter(v=>v.name)
-				console.log(b)
+				// console.log(b)
 				let arr = []
 				b.forEach((v,k)=>{
 					//过滤layout和index
@@ -129,18 +138,23 @@
 					})
 				})
 				
+				// console.log(arr)
+				
 				if(arr.length > 0) {
 					arr.unshift({name:'index',path:'/index',title:'后台首页'})
 				}
 				this.bran = arr
-				console.log(arr)
+				// console.log(arr)
 			},
 			
 			handleSelect(key, keyPath) {
 				this.navBar.active = key
 			},
-			sideSelect(key, keyPath) {
+			slideSelect(key, keyPath) {
 				this.slideMenuActive = key
+				
+				// 跳到指定到页面
+				console.log(this.slideMenus)
 			}
 		}
 	}

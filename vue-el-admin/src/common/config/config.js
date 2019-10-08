@@ -7,11 +7,13 @@ export default{
 				subActive: "0",
 				submenu: [{
 						icon: "el-icon-s-home",
-						name: "后台首页"
+						name: "后台首页",
+						pathname:"index"
 					},
 					{
 						icon: "el-icon-menu",
-						name: "商品列表"
+						name: "商品列表",
+						pathname: "shop_goods_list"
 					}
 				]
 			},
@@ -20,7 +22,8 @@ export default{
 				subActive: "0",
 				submenu: [{
 					icon: "el-icon-menu",
-					name: "商品列表"
+					name: "商品列表",
+					pathname: "shop_goods_list"
 				}]
 			},
 			{
