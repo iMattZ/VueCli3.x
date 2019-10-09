@@ -32,7 +32,7 @@
 				<!-- 侧边布局 -->
 				<el-aside width="200px">
 
-					<el-menu default-active="0" @select="slideSelect" style="height: 100%;">
+					<el-menu :default-active="slideMenuActive" @select="slideSelect" style="height: 100%;">
 
 						<el-menu-item :index="index|numToString" v-for="(item,index) in slideMenus" :key="index">
 							<i :class="item.icon"></i>
@@ -45,10 +45,10 @@
 				</el-aside>
 
 				<!-- 主布局 -->
-				<el-main>
+				<el-main class="bg-light">
 					
 					<!-- 面包屑导航 -->
-					<div class="border-bottom mb-3" v-if="bran.length > 0"
+					<div class="border-bottom mb-3 bg-white" v-if="bran.length > 0"
 					style="padding: 20px; margin: -20px;">
 						
 						<el-breadcrumb separator-class="el-icon-arrow-right">
@@ -59,6 +59,16 @@
 					
 					<!-- 主内容 -->
 					<router-view></router-view>
+					
+					
+					<!-- 回到顶部 -->
+					<div style="height: 1200px;">
+						<el-backtop target=".el-main" :bottom="100">
+						    <div style="height: 100%; width: 100%; background-color: #f2f5f6;box-shadow: 0 0 6px rgba(0,0,0, .12); text-align: center; line-height: 40px;color: #1989fa;
+						      ">UP</div>
+						  </el-backtop>
+					</div>
+					
 					
 				</el-main>
 
@@ -139,6 +149,8 @@
 				if(r) {
 					r = JSON.parse(r)
 					console.log(r)
+					this.navBar.active = r.top
+					this.slideMenuActive = r.left
 				}
 			},
 			
@@ -170,15 +182,23 @@
 			handleSelect(key, keyPath) {
 				this.navBar.active = key
 				// 默认选中跳转到当前激活
-				this.$route.push({
-					name:this.slideMenus[this.slideMenuActive].pathname
-				})
+				this.slideMenuActive = '0'
+				if(this.slideMenus.length > 0) {
+					this.$router.push({
+						name:this.slideMenus[this.slideMenuActive].pathname
+					})
+				}
+				
 			},
 			slideSelect(key, keyPath) {
 				this.slideMenuActive = key
 				
 				// 跳到指定到页面
-				console.log(this.slideMenus[Key].pathname)
+				// console.log(this.slideMenus[Key].pathname)
+				this.$router.push({
+					name:this.slideMenus[key].pathname
+				})
+				
 			}
 		}
 	}
