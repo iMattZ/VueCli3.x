@@ -16,8 +16,7 @@
 
 					<el-submenu index="6">
 						<template slot="title">
-							<el-avatar :size="20" 
-							src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
+							<el-avatar :size="20" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
 							summer
 						</template>
 						<el-menu-item index="6-1">修改</el-menu-item>
@@ -45,31 +44,30 @@
 				</el-aside>
 
 				<!-- 主布局 -->
-				<el-main class="bg-light">
-					
+				<el-main class="bg-light" style="padding-bottom: 60px;">
+
 					<!-- 面包屑导航 -->
-					<div class="border-bottom mb-3 bg-white" v-if="bran.length > 0"
-					style="padding: 20px; margin: -20px;">
-						
+					<div class="border-bottom mb-3 bg-white" v-if="bran.length > 0" style="padding: 20px; margin: -20px;">
+
 						<el-breadcrumb separator-class="el-icon-arrow-right">
-						  <el-breadcrumb-item v-for="(item,index) in bran" :key="index" :to="{path:item.path}">{{item.title}}</el-breadcrumb-item>
+							<el-breadcrumb-item v-for="(item,index) in bran" :key="index" :to="{path:item.path}">{{item.title}}</el-breadcrumb-item>
 						</el-breadcrumb>
 					</div>
-					
-					
+
+
 					<!-- 主内容 -->
 					<router-view></router-view>
-					
-					
+
+
 					<!-- 回到顶部 -->
-					<div style="height: 1200px;">
-						<el-backtop target=".el-main" :bottom="100">
-						    <div style="height: 100%; width: 100%; background-color: #f2f5f6;box-shadow: 0 0 6px rgba(0,0,0, .12); text-align: center; line-height: 40px;color: #1989fa;
+					<!-- <div style="height: 1200px;"> -->
+					<el-backtop target=".el-main" :bottom="100">
+						<div style="height: 100%; width: 100%; background-color: #f2f5f6;box-shadow: 0 0 6px rgba(0,0,0, .12); text-align: center; line-height: 40px;color: #1989fa;
 						      ">UP</div>
-						  </el-backtop>
-					</div>
-					
-					
+					</el-backtop>
+					<!-- </div> -->
+
+
 				</el-main>
 
 
@@ -93,33 +91,33 @@
 
 		data() {
 			return {
-				navBar:[],
-				bran:[]
+				navBar: [],
+				bran: []
 			};
 		},
-		
-		watch:{
-			'$route'(to,from) {
+
+		watch: {
+			'$route'(to, from) {
 				// console.log(to);
 				// console.log(from);
-				
+
 				// 本地存储
-				localStorage.setItem('navActive',JSON.stringify({
-					top:this.navBar.active,
-					left:this.slideMenuActive
+				localStorage.setItem('navActive', JSON.stringify({
+					top: this.navBar.active,
+					left: this.slideMenuActive
 				}))
-				
+
 				this.getRouterBran()
 			}
 		},
-		
+
 		created() {
 			// 初始化菜单
 			this.navBar = this.$conf.navBar
-			
+
 			// 获取面包屑导航
 			this.getRouterBran()
-			
+
 			// 初始化选中菜单
 			this.__initNavBar()
 		},
@@ -143,62 +141,66 @@
 		},
 
 		methods: {
-			
+
 			__initNavBar() {
 				let r = localStorage.getItem('navActive')
-				if(r) {
+				if (r) {
 					r = JSON.parse(r)
 					console.log(r)
 					this.navBar.active = r.top
 					this.slideMenuActive = r.left
 				}
 			},
-			
+
 			// 获取面包屑导航
 			getRouterBran() {
 
-				let b = this.$route.matched.filter(v=>v.name)
+				let b = this.$route.matched.filter(v => v.name)
 				// console.log(b)
 				let arr = []
-				b.forEach((v,k)=>{
+				b.forEach((v, k) => {
 					//过滤layout和index
-					if(v.name === 'index' || v.name === 'layout') return
+					if (v.name === 'index' || v.name === 'layout') return
 					arr.push({
-						name:v.name,
-						path:v.path,
-						title:v.meta.title
+						name: v.name,
+						path: v.path,
+						title: v.meta.title
 					})
 				})
-				
+
 				// console.log(arr)
-				
-				if(arr.length > 0) {
-					arr.unshift({name:'index',path:'/index',title:'后台首页'})
+
+				if (arr.length > 0) {
+					arr.unshift({
+						name: 'index',
+						path: '/index',
+						title: '后台首页'
+					})
 				}
 				this.bran = arr
 				// console.log(arr)
 			},
-			
+
 			handleSelect(key, keyPath) {
 				this.navBar.active = key
 				// 默认选中跳转到当前激活
 				this.slideMenuActive = '0'
-				if(this.slideMenus.length > 0) {
+				if (this.slideMenus.length > 0) {
 					this.$router.push({
-						name:this.slideMenus[this.slideMenuActive].pathname
+						name: this.slideMenus[this.slideMenuActive].pathname
 					})
 				}
-				
+
 			},
 			slideSelect(key, keyPath) {
 				this.slideMenuActive = key
-				
+
 				// 跳到指定到页面
 				// console.log(this.slideMenus[Key].pathname)
 				this.$router.push({
-					name:this.slideMenus[key].pathname
+					name: this.slideMenus[key].pathname
 				})
-				
+
 			}
 		}
 	}
