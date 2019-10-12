@@ -57,8 +57,8 @@
 
 		<!-- 销售情况统计 | 单品销售排名 -->
 		<el-row :gutter="20" class="mt-3">
-			<el-col :span="12" >
-				<el-card class="box-card">
+			<el-col :span="12">
+				<el-card class="box-card" style="height: 303px;">
 					<div slot="header" class="clearfix">
 						<span>卡片名称</span>
 						<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
@@ -98,27 +98,28 @@
 						<span>卡片名称</span>
 						<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
 					</div>
-					<el-table
-					    :data="tableData"
-					    style="width: 100%"
-					    height="250">
-					    <el-table-column
-					      fixed
-					      prop="date"
-					      label="#"
-					      width="150">
-					    </el-table-column>
-					    <el-table-column
-					      prop="name"
-					      label="商品信息"
-					      width="120">
-					    </el-table-column>
-					    <el-table-column
-					      prop="name"
-					      label="销量"
-					      width="120">
-					    </el-table-column>
-					  </el-table>
+					   <el-table
+					      :data="tableData"
+					      height="200"
+					      border
+					      style="width: 100%">
+					      <el-table-column
+					        type="index"
+					        width="50">
+					      </el-table-column>
+						  
+					      <el-table-column
+					        prop="name"
+					        label="商品信息">
+					      </el-table-column>
+						  
+					      <el-table-column
+					        prop="num"
+					        label="销量"
+							width="100">
+					      </el-table-column>
+					    </el-table>
+					  
 				</el-card>
 			</el-col>
 		</el-row>
@@ -132,12 +133,23 @@
 		data() {
 			return {
 				tableData: [{
-				          index: '2016-05-03',
-				          name: '王小虎',
-				          province: '上海',
-				          city: '普陀区',
-				          address: '上海市普陀区金沙江路 1518 弄',
-				          zip: 200333
+				          name:"小天鹅滚动洗衣机...",
+						  num:"9"
+				        },{
+				          name:"小天鹅滚动洗衣机...",
+						  num:"9"
+				        },{
+				          name:"小天鹅滚动洗衣机...",
+						  num:"9"
+				        },{
+				          name:"小天鹅滚动洗衣机...",
+						  num:"9"
+				        },{
+				          name:"小天鹅滚动洗衣机...",
+						  num:"9"
+				        },{
+				          name:"小天鹅滚动洗衣机...",
+						  num:"9"
 				        }],
 						
 				counts: [{
